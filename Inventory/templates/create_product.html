@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+                <legend class="border-bottom mb-4">{{title}}</legend>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">   
+            <div class="form-group">
+                {{ form.productname.label(class="form-control-label") }}
+                {% if form.productname.errors %}
+                    {{ form.productname(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.productname.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.productname(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>   
+            <div class="form-group">
+                {{ form.category.label(class="form-control-label") }}
+                {% if form.category.errors %}
+                    {{ form.category(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.category.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.category(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.descrption.label(class="form-control-label") }}
+                {% if form.descrption.errors %}
+                    {{ form.descrption(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.descrption.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.descrption(class="form-control form-control-lg") }}
+                {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                Descrption need to be minimum 50 words.
+                </small>
+            </div>
+            <div class="row">
+    <div class="col-md">
+            <div class="form-group">
+                {{ form.count.label(class="form-control-label") }}
+                {% if form.count.errors %}
+                    {{ form.count(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.count.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.count(class="form-control form-control-lg") }}
+                {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                Put zero if you are not having quantity based product
+                </small>
+            </div>
+    </div>
+    <div class="col-md">
+            <div class="form-group">
+                {{ form.cost.label(class="form-control-label") }}
+                {% if form.cost.errors %}
+                    {{ form.cost(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.cost.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.cost(class="form-control form-control-lg") }}
+                {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    In Rupees. Put Zero if your product not having a fixed price
+                </small>
+            </div>
+    </div>
+    <div class="col-md">
+            <div class="form-group">
+                {{ form.offer.label(class="form-control-label") }}
+                {% if form.offer.errors %}
+                    {{ form.offer(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.offer.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.offer(class="form-control form-control-lg") }}
+                {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Enter you offer in percentage.
+                </small>
+            </div>
+    </div>
+  </div>
+            <div class="form-group">
+                {{ form.url.label(class="form-control-label") }}
+                {% if form.url.errors %}
+                    {{ form.url(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.url.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.url(class="form-control form-control-lg") }}
+                {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Leave it blank If you are not having any url.
+                </small>
+            </div>
+                <div class="form-group">
+                    {{ form.folderunder.label(class="form-control-label") }}
+                    {{ form.folderunder(class="form-control",readonly="True") }}
+                </div>
+        </fieldset>
+        <div class="form-group">
+            {% if title=='create product' %}
+            {{ form.submit(class="btn btn-outline-info") }}
+            <a class="btn btn-link" href="{{ url_for('products.dashboard') }}" role="button">Cancel</a>
+            {% else %}
+            {% if visible==1 %}
+            {{ form.publish(class="btn btn-outline-info") }}
+            {% else %}
+            {{ form.unpublish(class="btn btn-outline-info") }}
+            {% endif %}
+            {{ form.update(class="btn btn-outline-info") }}
+            <button class="btn btn-link" onclick="goBack()">Back</button>
+            {% endif %}
+                
+        </div>
+    </form>
+            {% if title=='create product' %}
+            
+            {% else %}
+            <div>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a class="btn btn-primary" href="{{ url_for('products.change_product_photos', product_id=product_id) }}" role="button">Change Image</a>
+  </div>
+  <div class="btn-group mr-2" role="group" aria-label="Third group">
+  </div>
+</div>
+        </div>
+            {% endif %}
+</div>
+  <!-- Modal -->
+  
+{% endblock content %}

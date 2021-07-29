@@ -1,0 +1,255 @@
+{% extends "blog_layout.html" %}
+{% block content %}
+    <div class="container text-center">
+    {% if re_products %}
+    <section class="newproducts">
+    <h3>New Products</h3>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
+          <div class="MultiCarousel-inner">
+            {% for product in re_products%}
+            <div class="item">
+              <div class="pad15" >
+                <img class="card-img-top img-fluid" style="height: 200px" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img_list[product.id]}}" alt="Card image cap">
+                <p class="lead">{{product.productname}}</p>                
+                 {% if product.cost>0 %}
+                    <p class="price">{{product.cost}}</p>
+                  {% endif %}
+                 {% if product.spl_cost>0 %}
+                    <p class="price">{{product.spl_cost}}% off</p>
+                  {% endif %}                
+                <a href="{{ url_for('blog.product', link_name=org.link_name,product_id=product.id )}}"><button type="button" class="btn btn-secondary">view item</button></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-dark leftLst"><strong><</strong></button>
+            <button class="btn btn-dark rightLst"><strong>></strong></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  {% endif %}
+  {% if bo_products %}
+  <section class="mostvisited">
+    <h3>Best Offer</h3>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
+          <div class="MultiCarousel-inner">
+            {% for product in bo_products%}
+            {% if product.spl_cost and product.spl_cost>0 %}
+            <div class="item">
+              <div class="pad15">
+                <img class="card-img-top gh img-fluid" style="height: 200px" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img_list[product.id]}}" alt="Card image cap">
+                <p class="lead">{{product.productname}}</p>                
+                 {% if product.cost>0 %}
+                    <p class="price">{{product.cost}}</p>
+                  {% endif %}
+                 {% if product.spl_cost>0 %}
+                    <p class="price">{{product.spl_cost}}% off</p>
+                  {% endif %}
+                <a href="{{ url_for('blog.product', link_name=org.link_name,product_id=product.id )}}"><button type="button" class="btn btn-secondary">view item</button></a>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <button class="btn btn-dark leftLst"><strong><</strong></button>
+            <button class="btn btn-dark rightLst"><strong>></strong></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  {% endif %}
+  {% if mv_products %}
+  <section class="mostvisited">
+    <h3>Most Visited</h3>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
+          <div class="MultiCarousel-inner">
+            {% for product in mv_products%}
+            <div class="item">
+              <div class="pad15">
+                <img class="card-img-top hg img-fluid" style="height: 200px" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img_list[product.id]}}" alt="Card image cap">
+                <div style="height: auto;">
+                  <p class="lead">{{product.productname}}</p>                
+                 {% if product.cost>0 %}
+                    <p class="price">{{product.cost}}</p>
+                  {% endif %}
+                 {% if product.spl_cost>0 %}
+                    <p class="price">{{product.spl_cost}}% off</p>
+                  {% endif %}
+                </div>                
+                <a href="{{ url_for('blog.product', link_name=org.link_name,product_id=product.id )}}"><button type="button" class="btn btn-secondary">view item</button></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-dark leftLst"><strong><</strong></button>
+            <button class="btn btn-dark rightLst"><strong>></strong></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  {% endif %}
+  {% if mL_products %}
+  <section class="mostvisited">
+    <h3>Most Liked</h3>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
+          <div class="MultiCarousel-inner">
+            {% for product in mL_products%}
+            {% if product.like>0 %}
+            <div class="item">
+              <div class="pad15">
+                <img class="card-img-top st img-fluid" style="height: 200px" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img_list[product.id]}}" alt="Card image cap">
+                <p class="lead">{{product.productname}}</p>                
+                 {% if product.cost>0 %}
+                    <p class="price">{{product.cost}}</p>
+                  {% endif %}
+                 {% if product.spl_cost>0 %}
+                    <p class="price">{{product.spl_cost}}% off</p>
+                {% endif %}
+                <a href="{{ url_for('blog.product', link_name=org.link_name,product_id=product.id )}}"><button type="button" class="btn btn-secondary">view item</button></a>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <button class="btn btn-dark leftLst"><strong><</strong></button>
+            <button class="btn btn-dark rightLst"><strong>></strong></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  {% endif %}
+  <section class="section-three" id="aboutus">
+    <h3 class="section-heading">About</h3>
+    <div class="about-content">
+      <p>{{org.about}}</p>
+    </div>
+  </section>
+      <hr>
+<!-- CONTACT - SECTION FOUR -->
+  <section id="contact" class="contact section-bg">
+    <div class="section-title">
+      <h3>Contact</h3>
+    </div>
+    <div class="container" data-aos="fade-up">
+      <div class="row contactrow">
+            <div class="col-md-12">
+              <div class="info-box">
+                <i class="material-icons">home</i>
+                <h3>Our Address</h3>
+                <p>{{org.address}},{{org.city}},{{org.state}},{{org.country}},{{org.pincode}}</p>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="info-box mt-4">
+                <i class="material-icons">email</i>
+                <h3>Email Us</h3>
+                <p>{{org.org.email}}</p>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="info-box mt-4">
+                <i class="material-icons">smartphone</i>
+                <h3>Call Us</h3>
+                <p>{{org.org.mobile_number}}</p>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="info-box mt-4">
+                <i class="bx bx-map"></i>
+                <h3>Follow Us</h3>
+                {% if org.facebook and org.facebook !='none' and org.facebook!='None' %}
+                <a href="{{org.facebook}}" target="_blank"><img class="socialmedia" src="{{url_for('static', filename='facebook.svg')}}" alt="facebook" title="facebook"></a>
+                {% endif %}
+                {% if org.insta and org.insta !='none' and org.insta!='None' %}
+                <a href="{{org.insta}}" target="_blank"><img class="socialmedia" src="{{url_for('static', filename='instagram-sketched.svg')}}" alt="instagram" title="instagram"></a>
+                {% endif %}
+              </div>
+            </div>
+
+
+      </div>
+        <div class="card">
+      <div class="row mt-4">
+        <div class="col-md">
+          <h4>We appreciate your feedback! </h4>
+          {% if not current_user.is_authenticated %}
+          <small>Log in to give feedback</small>
+          {% endif %}
+        </div>
+        <div  class="col-md-6">
+          <form method="POST" action="" role="form">
+            {{ form.hidden_tag() }}
+            <div class="form-row">
+              <div class="col-md">
+                <div class="form-group">
+                    {% if form.feedback.errors %}
+                        {{ form.feedback(class="form-control form-control-lg is-invalid",placeholder="Feedback") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.feedback.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.feedback(class="form-control form-control-lg",placeholder="Feedback") }}
+                    {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                {% if current_user.is_authenticated %}
+                <div class="text-center">{{ form.post(class="btn btn-secondary btn-lg") }}</div>
+                {% else %}
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Login needed">
+  <!-- <button class="btn btn-secondary btn-lg" style="pointer-events: none;" type="button" disabled>Post</button> --><button type="button" class="comment btn btn-dark" data-toggle="modal" data-target="#staticBackdrop">
+  Post
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Continue by Logging in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="{{ url_for('users.login_refresh') }}" type="button" class="btn btn-primary">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+</span>
+                {% endif %}
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+  </section>
+</div>
+{% endblock content %}

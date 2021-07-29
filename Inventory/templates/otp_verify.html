@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Register</legend>
+                <div class="form-group">
+                    {{ form.OTP.label(class="form-control-label") }}
+                    {% if form.OTP.errors %}
+                        {{ form.OTP(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.OTP.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.OTP(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+                <button class="btn btn-link" onclick="goBack()">Back</button>
+                <a class="btn btn-link" href="{{ url_for('products.dashboard') }}" role="button">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

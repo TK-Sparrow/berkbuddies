@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'org_logo/'+org.logo}}">
+        <div class="media-body">
+          <h2 class="account-heading">{{org.name}}</h2>
+          <p class="text-secondary">{{org.name}}</p>
+        </div>
+      </div>
+      <div class="content-section" style="font-size:20px;">
+          <p><b> Address : </b> {{org.address}}</p>
+          <p ><b>City : </b>{{org.city}}</p>
+          <p ><b>State : </b>{{org.state}}</p>
+          <p ><b>Country : </b>{{org.country}}</p>
+          <p ><b>Pincode : </b>{{org.pincode}}</p>
+          <p ><b>About : </b>{{org.about}}</p>
+          {% if org.insta %}
+            <p  ><b>Instagram link : </b>{{org.insta}}</p>
+            {% endif %}
+          {% if org.facebook %}
+            <p  ><b>Facebook link : </b>{{org.facebook}}</p>
+            {% endif %}
+          <p  ><b>Link : </b><a target="_blank" class="btn btn-link" href="https://berkbuddies.com/shop/{{org.link_name}}" role="button">https://berkbuddies.com/shop/{{org.link_name}}</a></p>
+          <p >Organization Registered at {{org.account_created.strftime('%d-%m-%Y')}}</p>
+      </div>
+      <a class="btn btn-outline-dark" href="{{(url_for('users.org_update'))}}" role="button">EDIT</a>
+      <button class="btn btn-link" onclick="goBack()">Back</button>
+    </div>
+{% endblock content %}

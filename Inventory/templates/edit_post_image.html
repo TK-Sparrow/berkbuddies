@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <script>
+  $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  } );
+  </script>
+  <div class="container">
+	<h4>Change the order of the Image to display</h4>
+	 <small id="passwordHelpBlock" class="form-text text-muted">
+                    The first image will be used as the display image of this product
+                </small>
+                <br>
+                <br>
+ <div class="container border border-primary" >
+  <ul id="sortable"  name="sortable" class="list-group list-group-horizontal-md" >
+  	{% for img in product_images %}
+  <li id={{img.id}} class="list-group-item border border-primary m-1"  >
+  	<div><img src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img.imagename}}" width="100" height="100"  >
+  		<br>
+            	<a href="{{url_for('products.delete_image',img_id=img.id)}}" class="btn btn-outline-dark">
+            	<svg class="bi bi-x" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+  <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+</svg></a></div>
+  </li >
+  {% endfor %}
+</ul>
+<form method="POST" action="" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <div class="form-group">
+          {{ form.order }}
+        </div>
+      </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info",onclick="displayorder()") }}
+            {{ form.add(class="btn btn-outline-info") }}
+                
+            <button class="btn btn-link" onclick="goBack()">Back</button>
+        </div>
+    </form>
+</div>
+</div>
+ <script>
+  function displayorder() {
+  const listItems = document.querySelectorAll('#sortable li');
+  var v="";
+	for (let i = 0; i < listItems.length; i++) {
+	v += listItems[i].id+","
+	}
+	document.getElementById("order").value = v
+}
+</script>
+{% endblock content %}

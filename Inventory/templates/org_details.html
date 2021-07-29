@@ -1,0 +1,365 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile</legend>
+                <div class="form-group">
+                    {{ form.org_name.label(class="form-control-label") }}
+
+                    {% if form.org_name.errors %}
+                        {{ form.org_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.org_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.org_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                 <div class="form-group">
+                {{ form.category.label(class="form-control-label") }}
+                {% if form.category.errors %}
+                    {{ form.category(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.category.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.category(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+                <div class="form-group">
+                    {{ form.address.label(class="form-control-label") }}
+
+                    {% if form.address.errors %}
+                        {{ form.address(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                	<div class="form-row">
+    <div class="col-md m-3 form-control">
+        <div id="contried">
+      <select name="country" class="countries form-control" id="countryId" onload="myFunction()">
+    <option id="cid" value="">Select Country</option>
+</select>
+</div>
+    </div>
+    <div class="col-md m-3 form-control">
+        <div id="stated">
+      <select name="state" class="states form-control" id="stateId">
+    <option value="">Select State</option>
+</select>
+</div>
+    </div>
+    <div class="col-md m-3 form-control">
+        <div id="citied">
+      <select name="city" class="cities form-control" id="cityId">
+    <option value="">Select City</option>
+</select>
+</div>
+    </div>
+  </div>
+  </div>
+
+                <div class="form-group">
+                    {{ form.pincode.label(class="form-control-label") }}
+
+                    {% if form.pincode.errors %}
+                        {{ form.pincode(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.pincode.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.pincode(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.about.label(class="form-control-label") }}
+
+                    {% if form.about.errors %}
+                        {{ form.about(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.about.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.about(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.slogan.label(class="form-control-label") }}
+
+                    {% if form.slogan.errors %}
+                        {{ form.slogan(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.slogan.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.slogan(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                    
+                
+                <div class="form-group">
+                    {{ form.logo.label(class="form-control-label") }}
+                    <img id="preview" style="width:200px;height:200px;display: none;" alt="your image"  />
+                    {% if form.logo.errors %}
+                        {{ form.logo(class="form-control form-control-lg is-invalid",onchange="readURL(this);") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.logo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.logo(class="form-control form-control-lg",onchange="readURL(this);") }}
+                    {% endif %}
+                    <script>
+                         function readURL(input) {
+                                if (input.files && input.files[0]) {
+                                    var reader = new FileReader();
+
+                                    reader.onload = function (e) {
+                                        $('#preview')
+                                            .attr('src', e.target.result);
+                                            document.getElementById("preview").style.display = "block";
+                                    };
+
+                                    reader.readAsDataURL(input.files[0]);
+                                }
+                            }
+                    </script>
+
+                </div>
+                <div class="form-group">
+                    {{ form.link_name.label(class="form-control-label") }}
+                    <div class="form-row">
+                    	<div class="col-auto">
+                    <div class="input-group-prepend">
+      <div class="input-group-text">https://berkbuddies.com/shop/</div>
+    </div>
+</div>
+<div class="col-auto">
+                    {% if form.link_name.errors %}
+                        {{ form.link_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.link_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.link_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="favcolor1">Choose Background Color1</label>
+                    <input type="color" id="favcolor1" name="favcolor1" value="#ff0000">
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    
+                </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="favcolor2">Choose Background Color2</label>
+                    <input type="color" id="favcolor2" name="favcolor2" value="#ff0000">
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    
+                </small>
+                </div>
+                <div class="form-group">
+                    {{ form.insta.label(class="form-control-label") }}
+
+                    {% if form.insta.errors %}
+                        {{ form.insta(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.insta.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.insta(class="form-control form-control-lg") }}
+                    {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Leave it blank If you are not having any Instagram account.
+                </small>
+                </div>
+                <div class="form-group">
+                    {{ form.facebook.label(class="form-control-label") }}
+
+                    {% if form.facebook.errors %}
+                        {{ form.facebook(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.facebook.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.facebook(class="form-control form-control-lg") }}
+                    {% endif %}
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Leave it blank If you are not having any Facebook page.
+                </small>
+                </div>
+                <div>
+                    {% if form.city_name.errors %}
+                        {{ form.city_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.city_name.errors %}
+                                <span> City {{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.city_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if form.state_name.errors %}
+                        {{ form.state_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.state_name.errors %}
+                                <span>State {{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.state_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if form.country_name.errors %}
+                        {{ form.country_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.country_name.errors %}
+                                <span>Country {{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.country_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.background_color1(class="form-control form-control-lg") }}
+                </div>
+                <div>
+                    {{ form.background_color1(class="form-control form-control-lg") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {% if title !="My Org Create" %}
+                {{ form.Update(class="btn btn-outline-info",onclick="get_country()") }}                
+            <button class="btn btn-link" onclick="goBack()">Back</button>
+                {% else %}
+                {{ form.Create(class="btn btn-outline-info",onclick="get_country()") }}
+                <a class="btn btn-link" href="{{ url_for('products.dashboard') }}" role="button">Cancel</a>
+                {% endif %}
+                
+            </div>
+        </form>
+    <script >
+
+    	function get_country(){
+            
+            var city=document.getElementById("city")
+            var state=document.getElementById("state")
+            var country=document.getElementById("country")
+    		document.getElementById("city_name").value = city.options[city.selectedIndex].text;
+    		document.getElementById("state_name").value = state.options[state.selectedIndex].text;
+    		document.getElementById("country_name").value = country.options[country.selectedIndex].text;
+            document.getElementById("background_color1").value = document.getElementById("favcolor1").value
+            document.getElementById("background_color2").value = document.getElementById("favcolor2").value
+    	}
+    </script>
+<script type="text/javascript">
+        window.onload = function() {
+            document.getElementById("favcolor1").value = '{{form.background_color1.data}}'
+            document.getElementById("favcolor2").value = '{{form.background_color2.data}}'
+            countries();
+          
+};
+function countries() {
+  $.ajax({url: "/country", success: function(response){
+        var json = $.parseJSON(response);
+        $("#contried").html(json.country);
+        var dd = document.getElementById('country');
+for (var i = 0; i < dd.options.length; i++) {
+    if (dd.options[i].text === '{{form.country_name.data}}') {
+        dd.selectedIndex = i;
+        break;
+    }
+}
+states();
+      },
+      error: function(error){
+        console.log(error);
+        
+      }
+    });
+
+
+}
+        function states() {
+  var x = document.getElementById("country").value;
+  $.ajax({url: "/state/"+x, success: function(response){
+        var json = $.parseJSON(response);
+        $("#stated").html(json.state);
+        var dd = document.getElementById('state');
+for (var i = 0; i < dd.options.length; i++) {
+    if (dd.options[i].text === '{{form.state_name.data}}') {
+        dd.selectedIndex = i;
+        break;
+    }
+}
+cities();
+      },
+      error: function(error){
+        console.log(error);
+        
+      }
+    });
+
+
+}
+
+function cities() {
+  var x = document.getElementById("country").value;
+  var y = document.getElementById("state").value;
+  $.ajax({url: "/city/"+x+"/"+y, success: function(response){
+        var json = $.parseJSON(response);
+        $("#citied").html(json.city);
+        var dd = document.getElementById('city');
+        for (var i = 0; i < dd.options.length; i++) {
+        if (dd.options[i].text === '{{form.city_name.data}}') {
+            dd.selectedIndex = i;
+        break;
+    }
+
+}
+      },
+      error: function(error){
+        console.log(error);
+        
+      }
+    });
+
+
+}
+
+    </script>
+    </div>
+ {% endblock content %}

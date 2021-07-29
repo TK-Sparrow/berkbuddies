@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="content-section">
+
+    <form  method="POST" action="" enctype="multipart/form-data" >
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <div class="form-group">
+          {{ form.file(class="form-control-file",accept="image/*", multiple="True") }}
+          
+          <small id="passwordHelpBlock" class="form-text text-muted">
+                    You can upload {{t}} Images only for this product
+                </small>
+          {% if form.file.errors %}
+          {% for error in form.file.errors %}
+          <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </fieldset>
+      <div hidden="True">{{t}}</div>
+        <div class="form-group">
+          <div id="hid">
+            {{ form.submit(class="btn btn-outline-info",onclick="myFunction()") }}
+                <a class="btn btn-link" href="{{ url_for('products.dashboard') }}" role="button">Cancel</a>
+                </div>
+<button class="btn btn-primary" type="button" disabled id="see" style="display:none;">
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Loading...
+</button>
+        </div>
+    </form>
+    <div class="overlay"></div>
+<div class="spanner">
+  <div class="loader"></div>
+  <p>Uploading Images file, please be patient.</p>
+</div>
+    {% if form.submit.errors %}
+          {% for error in form.submit.errors %}
+          <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          {% endif %}
+  </div>
+  <script type="text/javascript">
+function myFunction() {
+  var x = document.getElementById("see");
+  var y = document.getElementById("hid");
+    x.style.display = "block";
+    y.style.display = "none";
+}
+</script>
+
+        <script type="text/javascript">        	
+            $(document).ready(function() {
+                $('input[type="file"]').imageuploadify();
+            })
+
+            $("input[type='submit']").click(function(){
+  $("div.spanner").addClass("show");
+  $("div.overlay").addClass("show");
+});
+        </script>
+{% endblock content %}

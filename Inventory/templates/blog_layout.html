@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- GOOGLE FONTS LINK -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/
+  css2?family=Montserrat:ital@1&family=Orbitron:wght@800&family=Patua+One&display=swap" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+<!-- FONt AWESOME LINk -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <title>Berk Buddies-{{org.name}}</title>
+<!-- BOOTSTRAP JS LINK  -->
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <!-- NAVIGATION BAR -->
+  <header>
+    <nav class="navbar-custom navbar navbar-expand-lg navbar-light ">
+      <a class="navbar-brand" href="{{ url_for('blog.home',link_name=org.link_name) }}">{{org.name}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active" >
+            <!-- <a class="nav-link" href="{{ url_for('blog.home',link_name=org.link_name) }}">Home</a> -->
+            <form method="POST" action="" style="margin-left: auto;margin-right: auto;" class="form-inline mr-3 my-2 my-lg-0">
+            {{ search_form.hidden_tag() }}
+                <div class="form-group autocomplete" style="margin-left: auto;margin-right: auto;">
+                    <!-- {{ search_form.product_name.label(class="form-control-label") }} -->
+                    {% if search_form.product_name.errors %}
+                        {{ search_form.product_name(class="form-control mr-sm-2 is-invalid text-center", placeholder="Type Here.....",style="margin-left: auto;margin-right: auto;") }}
+                        <div class="invalid-feedback">
+                            {% for error in search_form.product_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ search_form.product_name(class="form-control mr-sm-2 text-center", placeholder="Type Here.....!",style="margin-left: auto;margin-right: auto;") }}
+                    {% endif %}
+                </div>
+            <div class="form-group" style="margin-left: auto;margin-right: auto;">
+                {{ search_form.search(class="btn btn-outline-success my-2 my-sm-0") }}
+            </div>
+        </form>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ url_for('blog.category',link_name=org.link_name) }}">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('blog.home',link_name=org.link_name) }}#aboutus">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('blog.home',link_name=org.link_name) }}#contact">Contact</a>
+          </li>
+        </ul>
+        {% if current_user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+           <div class="dropdown">
+              
+  <a class="nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{current_user.username}}
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="{{ url_for('users.view_and_feedback') }}">Dashboard</a>
+    <a class="dropdown-item" href="{{ url_for('users.profile') }}">Account</a>
+    <a class="dropdown-item" href="{{ url_for('users.org_create') }}">My Org</a>
+    <a class="dropdown-item" href="{{ url_for('users.logout') }}">Logout</a>
+  </div>
+</div>
+        </ul>
+        {% else %}
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item"><a id="login_url" class="nav-link" href="{{ url_for('users.login_refresh') }}"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}"><span class="glyphicon glyphicon-log-in"></span> Sign Up</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+<main role="main">
+{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% block content %}{% endblock %}
+
+</main>
+  <footer class="footer mt-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <p class="copyrights">This Site created by <a target="_blank" href="{{ url_for('blog.berkbuddy_home') }}"><strong>Berk Buddies</strong></a>. Visit us for information.</p>
+        </div>
+        <div class="col-lg-6 footer-icons" style="text-align: right;">
+          Follow us on :
+          <a target="_blank" href="https://www.facebook.com/Berkbuddies/"><img class="socialmedia" src="{{url_for('static', filename='facebook.svg')}}" alt="facebook" title="facebook"></a>
+                <a target="_blank" href="https://instagram.com/berkbuddies?igshid=1cpo2p604yt8u"><img class="socialmedia" src="{{url_for('static', filename='instagram-sketched.svg')}}" alt="instagram" title="instagram"></a>
+          
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+</body>
+<script src="{{ url_for('static', filename='allproducts.js') }}" charset="utf-8"></script>
+ <script>
+$(document).ready(function(){
+ var color = '{{org.color_code1}}';
+  var color2 = '{{org.color_code2}}';
+   
+  var str = "linear-gradient(90deg," + color + "," + color2 + ")";
+  $("body").css("background",str);
+ 
+}); 
+</script>
+<script>
+$(document).ready(function(){
+ var shopes=[];
+ function loadCountries(){
+  $.getJSON('/shop/{{org.link_name}}/allproducts', function(response, status, xhr){
+
+   for (var i = 0; i < response.length; i++ ) {
+    shopes.push(response[i].name);
+   }
+ });
+ };
+ loadCountries();
+ 
+ function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          var res = arr[i].split("'").join("@@");
+          b.innerHTML += "<input type='hidden' value='" + res + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              var arrstr = this.getElementsByTagName("input")[0].value;
+              var res = arrstr.split("@@").join("'");
+              inp.value = res
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+  }
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+}
+autocomplete(document.getElementById("product_name"), shopes);
+/* $('#shop_name').autocomplete({
+  source: shopes, 
+ }); */
+ 
+}); 
+</script>
+</html>

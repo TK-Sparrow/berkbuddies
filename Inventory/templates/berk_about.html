@@ -1,0 +1,214 @@
+{% extends "berk_layout.html" %}
+{% block content %}
+<div class="text-center">
+	<p>
+		<h6>Are you doing a small scale business?<br>
+Are you doing digital marketing in social media?<br>
+And more importantly, are you providing home delivery service also?<br><br>
+
+Then berk buddies lend you a hand to move your business to the next level.<br><br>
+
+We help you to convert your business into a standard format with free of cost. <br><br>
+
+
+In five steps<br>
+Berk buddies will provide a free landing website for your business to showcase all your product. <br>
+If you need we will provide mobile application also for you. <br><br>
+
+ <h4>Step 1:</h4> <br>
+<div class="row text-center align-items-center">
+<div class="col-md">
+  <img class="img-fluid" src="{{url_for('static', filename='about/register1.PNG')}}"><br><br>
+</div>
+<br>
+<div class="col-md text-center">
+register your account in berk buddies <br>
+<br>
+first register your mail id and then 
+You will receive a email to that mail id which contain the account registration link.<br><br>
+</div>
+<br>
+</div>
+<br>
+<h4>Step 2:</h4><br> 
+<div class="row text-center align-items-center">
+<div class="col-md text-center">
+Create categories for your product (like clothes, food, art etc) <br>
+Note: you can even create sub categories for you category also. (like for clothes men women child)
+<br><br>
+</div>
+<br>
+<div class="col-md">
+  <img class="img-fluid" src="{{url_for('static', filename='about/create category.PNG')}}"><br><br>
+</div>
+<br>
+</div>
+<br>
+<h4>Step 3:</h4><br>
+<div class="row text-center align-items-center">
+<div class="col-md">
+  <img class="img-fluid" src="{{url_for('static', filename='about/add product.PNG')}}"><br><br>
+</div>
+<br>
+<div class="col-md text-center">
+
+Add products to corresponding categories you created. You can upload upto 10 images for your product.<br>
+Note: we are not going to compress your image quality. <br><br>
+</div>
+<br>
+</div>
+<br>
+  <h4>Step 4:</h4><br>
+<div class="row text-center align-items-center">
+<div class="col-md text-center">
+Register <strong>My Org</strong> for your Shop/Business in berk buddies to get your website link. <br>
+Note: link is user preferences but it need to be unique fom other user. <br><br>
+</div>
+<br>
+<div class="col-md">
+  <img class="img-fluid" src="{{url_for('static', filename='about/my org.PNG')}}"><br><br>
+</div>
+<br>
+</div>
+<br>
+ <h4>Step 5:</h4> <br>
+<div class="row text-center align-items-center">
+<div class="col-md">
+  <img class="img-fluid" src="{{url_for('static', filename='about/linkname.PNG')}}"><br><br>
+</div>
+<br>
+<div class="col-md text-center">
+Share your organisation landing site link with your customer. <br><br>
+</div>
+<br>
+</div>
+<br>
+
+
+In your dashboard you can track <br>
+How many times people visited your site and you product. <br><br>
+
+How many people liked your product and who are they. <br><br>
+
+What are the queries they have for your product and so on. <br><br>
+
+Contact us if you want a customized website for your shop.<br><br>
+
+If you want mobile application for your site<br><br>
+Just rise a request mail to us. <br>
+You can get your mobile application also. <br>
+	</h6></p>
+</div>
+<div class="fixed-bottom m-3">
+	<button  type="button" class="reply btn btn-success float-right " data-toggle="modal" data-target="#exampleModal" data-whatever="0">Queries</button>
+</div>
+
+   <div style="color: black" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Queries</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form name="ContactForm" method="post" action="">
+<div class="form-group">
+	<div class="modal-body">
+<label for="name">Name:</label>
+<input type="text" class="form-control" id="name">
+</div>
+<div class="form-group">
+<label for="email">Email Address:</label>
+<input type="email" class="form-control" id="email">
+</div>
+<div class="form-group">
+<label for="message">Message:</label>
+<textarea name="message" class="form-control" id="message">
+</textarea>
+</div>
+</div>
+<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="submit" class="btn btn-info">Submit</button>
+      </div>
+</form>
+ 
+<div class="message_box" style="margin:10px 0px;">
+</div>
+
+    </div>
+  </div>
+</div>
+
+  <script>
+$(document).ready(function() {
+   var delay = 2000;
+   $('#submit').click(function(e){
+   e.preventDefault();
+   var name = $('#name').val();
+   if(name == ''){
+   $('.message_box').html(
+   '<span style="color:red;">Enter Your Name!</span>'
+   );
+   $('#name').focus();
+   return false;
+   }
+ 
+   var email = $('#email').val();
+   if(email == ''){
+   $('.message_box').html(
+   '<span style="color:red;">Enter Email Address!</span>'
+   );
+   $('#email').focus();
+   return false;
+   }
+   if( $("#email").val()!='' ){
+   if( !isValidEmailAddress( $("#email").val() ) ){
+   $('.message_box').html(
+   '<span style="color:red;">Provided email address is incorrect!</span>'
+   );
+   $('#email').focus();
+   return false;
+   }
+   }
+ 
+   var message = $('#message').val();
+   if(message == ''){
+   $('.message_box').html(
+   '<span style="color:red;">Enter Your Message Here!</span>'
+   );
+   $('#message').focus();
+      return false;
+   } 
+ 	$.ajax({url: "{{url_for('blog.berk_comment')}}",
+      type: 'post',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify({"comment":message ,"email_id": email,"name": name }),
+       success: function(response){
+        console.log(response);
+        $('#name').val("");
+        $('#email').val("");
+        $('#message').val("");
+       	setTimeout(function() {
+   $('.message_box').html("Thank you for contacting us, we will get back to you shortly.");
+   }, delay);
+        /*location.reload(true);*/
+      },
+      error: function(error){
+        console.log(error);
+        alert("Fill all the field")
+        console.log('error');
+      }
+    });
+   
+   });
+ 
+});
+function isValidEmailAddress(emailAddress) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+};
+</script>
+{% endblock content %}

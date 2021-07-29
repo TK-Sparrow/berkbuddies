@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile</legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                	{{ form.email(class="form-control",readonly="True") }}
+                </div>
+                <div class="form-group">
+                    {{ form.mobile_number.label(class="form-control-label") }}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                    {{ form.mobile_number(class="form-control",readonly="True") }}
+                </div>
+                <div class="form-group col-md-2">
+                    
+                    <a class="btn btn-outline-secondary" href="{{ url_for('users.mobile_number_verification') }}" role="button">
+                    {% if(form.mobile_number.data=="none") %}
+                    Add
+                    {% else %}
+                    Change
+                    {% endif %}
+                </a>
+                </div>
+                </div>
+            </div>
+                <div class="form-group">
+                    <h6>Account Created Date : {{date.strftime('%d-%m-%Y')}}</h6>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.Update(class="btn btn-outline-info") }}
+                <button class="btn btn-link" onclick="goBack()">Back</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

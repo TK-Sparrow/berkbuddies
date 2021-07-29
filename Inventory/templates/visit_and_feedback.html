@@ -1,0 +1,232 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="content-section card" >
+	<div class="container">
+	<button class="btn btn-outline-secondary mb-2 float-right" id="refresh">Refresh <span class="material-icons">refresh</span></button>
+	<button class="btn btn-outline-secondary mb-2 float-right" type="button" disabled id="see" style="display:none;">
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Refreshing...
+</button>
+</div>
+<div class="row">
+	
+	<div class="nav flex-column nav-pills col-md-auto" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+  <a class="nav-link" id="v-pills-Product-tab" data-toggle="pill" href="#v-pills-Product" role="tab" aria-controls="v-pills-Product" aria-selected="false">Product</a>
+  <a class="nav-link" id="v-pills-Feedback-tab" data-toggle="pill" href="#v-pills-Feedback" role="tab" aria-controls="v-pills-Feedback" aria-selected="false">Feedback</a>
+  <a class="nav-link" id="v-pills-Comments-tab" data-toggle="pill" href="#v-pills-Comments" role="tab" aria-controls="v-pills-Comments" aria-selected="false">Comments</a>
+  <a class="nav-link" id="v-pills-Likes-tab" data-toggle="pill" href="#v-pills-Likes" role="tab" aria-controls="v-pills-Likes" aria-selected="false">Product Liked</a>
+</div>
+<div class="tab-content bg-steel col-md" id="v-pills-tabContent">
+  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+  	<div class="row m-2 p-3">
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="org_visit">{{org.visit}}</h1>
+          <h4>Page Visit</h4>
+        </div>
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="avg_pv">{{avg_pv}}</h1>
+          <h4>Avg product visit</h4>
+        </div>
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="p_count">{{p_count}}</h1><h6>/{{current_user.product_count}}</h6>
+          <h4>Total Product</h4>
+        </div>
+        </div>
+        <div class="row m-2 p-3">
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="mv_product_view">{{mv_product.visit}}</h1>
+          <h4>Most Viewed product<br></h4>
+          <h6 id="mv_product_name">{{mv_product.productname}}</h6>
+        </div>
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="ml_product_like">{{ml_product.like}}</h1>
+          <h4>Most Liked product<br></h4>
+          <h6 id="ml_product_name">{{ml_product.productname}}</h6>
+        </div>
+  		<div class="col-md border border-info rounded card m-2 p-2 text-center">
+          <h1 class="num" id="c_count">{{c_count}}</h1>
+          <h4>Total Category</h4>
+        </div>
+  	</div>
+  </div>
+  <div class="tab-pane fade" id="v-pills-Product" role="tabpanel" aria-labelledby="v-pills-Product-tab">
+  	<div class="card m-2">
+	  	<h2>Product Details</h2>
+	      <div class="table-responsive" id="product_table">
+	        <table class="table table-striped table-sm">
+	          <thead>
+	            <tr>
+	              <th>Name</th>
+	              <th>Cost</th>
+	              <th>Offer %</th>
+	              <th>Quantity</th>
+	              <th>Visit</th>
+	              <th>Like</th>
+	              <th>Published</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	          	<div >
+	          	{% if products %}
+	          	{% for product in products %}
+	            <tr>
+	              <td><a href="{{url_for('products.update_product',product_id=product.id)}}" class="btn 
+	              	btn-link">{{product.productname}}</a></td>
+	              <td>{{product.cost}}</td>
+	              <td>{{product.spl_cost}}%</td>
+	              <td>{{product.quantity}}</td>
+	              <td>{{product.visit}}</td>
+	              <td>{{product.like}}</td>
+	              <td>
+	              	{%if product.visible==0 %}
+	              	Yes
+	              	{% else %}
+	              	No
+	              	{% endif %}
+	              </td>
+	            </tr>
+	            {% endfor %}{% else %}
+	            <h6>No Products to Show </h6>
+	            {% endif %}	          		
+	          	</div>
+	          </tbody>
+	        </table>
+	      </div>
+	  </div>
+  </div>
+  <div class="tab-pane fade" id="v-pills-Comments" role="tabpanel" aria-labelledby="v-pills-Comments-tab">
+  	<div class="card m-2">
+	  	<h4>Comments</h4>
+	      <div class="table-responsive" id="comments">
+	        <table class="table table-striped table-sm">
+	          <thead>
+	            <tr>
+	              <th>Username</th>
+	              <th>Product Name</th>
+	              <th>Comment</th>
+	              <th>Date posted</th>
+	              <th>Reply</th>
+
+	            </tr>
+	          </thead>
+	          <tbody>
+	          	{% if comments %}
+	          	{% for cmt in comments %}
+	            <tr>
+	              <td>{{cmt.ucomment.username}}</td>
+	              <td><a href="{{url_for('products.update_product',product_id=cmt.comment.id)}}" class="btn 
+	              	btn-link">{{cmt.comment.productname}}</a></td>
+	              <td>{{cmt.comments}}</td>
+	              <td>{{cmt.date_posted}}</td>
+	              <td><a target="_blank" href="{{url_for('blog.product', link_name=org.link_name,product_id=cmt.comment.id)}}#cmt">View</a></td>
+	            </tr>
+	            {% endfor %}
+	            {% else %}
+	            <h6>No Comments to Show </h6>
+	            {% endif %}
+	          </tbody>
+	        </table>
+	      </div>
+	  </div>
+  </div>
+  <div class="tab-pane fade p-2" id="v-pills-Feedback" role="tabpanel" aria-labelledby="v-pills-Feedback-tab">
+  	<div class="card p-2" id="feedback">
+  		{% if feedbacks %}
+  		{% for feedback in feedbacks %}
+	  	<div class="row border-bottom border-dark">
+	  		<div class="col-md-auto">
+	  			<h6>{{feedback.ufeedback.username}}:</h6>
+	  			<small>{{feedback.date_posted}}</small>
+	  		</div>
+	  		<div class="col">
+	  			{{feedback.feedback}}
+	  		</div>  		
+	  	</div>
+  		{% endfor %}
+  		{% else %}
+	            <h6>No Feedbacks to Show </h6>
+	     {% endif %}
+  	</div>
+  </div>
+  <div class="tab-pane fade" id="v-pills-Likes" role="tabpanel" aria-labelledby="v-pills-Likes-tab">
+  	<div class="card m-2">
+	  	<h4>Likes</h4>
+	      <div class="table-responsive" id="likes">
+	        <table class="table table-striped table-sm">
+	          <thead>
+	            <tr>
+	              <th>Username</th>
+	              <th>Product Name</th>
+	              <th>Date Liked</th>
+
+	            </tr>
+	          </thead>
+	          <tbody>
+	          	{% if likes %}
+	          	{% for like in likes %}
+	            <tr>
+	              <td>{{like.ulikes.username}}</td>
+	              <td><a href="{{url_for('products.update_product',product_id=like.like.id)}}" class="btn 
+	              	btn-link">{{like.like.productname}}</a></td>
+	              <td>{{like.date_liked}}</td>
+	            </tr>
+	            {% endfor %}
+	            {% else %}
+	            <h6>No Like to Show </h6>
+	            {% endif %}
+	          </tbody>
+	        </table>
+	      </div>
+	  </div>
+  </div>
+</div>
+</div>
+
+  <script type="text/javascript">
+    $(".num").counterUp({delay:10,time:1000});
+  </script>
+  <script>
+    $(document).ready(function(){
+  $("#refresh").click(function(){
+  	$("#refresh").hide();
+    $("#see").show();
+    $.ajax({url: "{{url_for('users.view_and_feedback_refresh')}}", success: function(response){
+        var json = $.parseJSON(response);
+        $("#product_table").html(json.products);
+        $("#feedback").html(json.feedbacks);
+        $("#comments").html(json.comments);
+        $("#likes").html(json.likes);
+        $("#org_visit").html(json.org_visit);
+        $("#p_count").html(json.p_count);
+        $("#c_count").html(json.c_count);
+        $("#mv_product_name").html(json.mv_product_name);
+        $("#mv_product_view").html(json.mv_product_view);
+        $("#ml_product_name").html(json.ml_product_name);
+        $("#ml_product_like").html(json.ml_product_like);
+        $("#avg_pv").html(json.avg_pv);
+        $('.num').each(function () {
+  var $this = $(this);
+  jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+    duration: 1000,
+    easing: 'swing',
+    step: function () {
+      $this.text(Math.ceil(this.Counter));
+    }
+  });
+});
+        $("#refresh").show();
+        $("#see").hide();
+      },
+      error: function(error){
+        console.log(error);
+        $("#refresh").show();
+        $("#see").hide();
+      }
+    });
+  });
+});
+  </script>
+</div>
+{% endblock content %}

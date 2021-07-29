@@ -1,0 +1,66 @@
+{% extends "blog_layout.html" %}
+{% block content %}
+
+<div class="album bg-light">
+  <div class="card ">
+    <br>
+    <hr>
+    {% if cur_cat %}
+    <h3 id="{{cur_cat.foldername}}">{{cur_cat.foldername}}</h3>
+    {% else %}
+    <h3 >Main Categories</h3>
+    {% endif %}
+    <hr>
+    <div class="container text-center">
+      	{% if categories %}
+      	<h6>Sub Categories</h6>
+      	<br>
+      <div class="row justify-content-center">
+        {% for category in categories %}        
+        <div class="col-md-4 shadow-sm">
+          <div class="card m-2 text-center">
+            <a class="nav-link w-100"  href="{{ url_for('blog.categoryper',link_name=org.link_name,folder_id=category.id) }}" role="button"> 
+              <div class="card text-white bg-dark" style="max-width: 18rem; margin-left: auto;margin-right: auto;">
+                <div class="card-header">{{category.foldername}}</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <hr>
+    <div class="container text-center">
+    	{% if products %}
+      	<h5>Products</h5><br>
+      <div class="row justify-content-center">
+        {% for product in products %}
+        {% if product.productf.id == folder_id %}
+        <div class="col-md-auto border-primary" >
+          <div class="card" style="width: 13rem;margin: auto">
+            <img class="img-thumbnail mt-3 mx-3" style="height: 200px" src="https://berkbuddy1.s3.ap-south-1.amazonaws.com/{{'product_posts/'+img_list[product.id]}}" alt="Card image cap">
+            <div class="card-body">
+              <h4 class="card-title">{{product.productname}}</h4>
+               <p class="card-text">               
+                 {% if product.cost>0 %}
+                    {{product.cost}}
+                  {% endif %}               
+                {% if product.spl_cost>0 %}
+               ({{product.spl_cost}}%)
+               {% endif %}
+             </p>
+              <a href="{{ url_for('blog.product', link_name=org.link_name,product_id=product.id )}}"><button type="button" class="btn btn-secondary">view item</button></a> 
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+    <hr>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
